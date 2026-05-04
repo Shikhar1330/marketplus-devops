@@ -1,8 +1,8 @@
 pipeline {
   agent any
   environment {
-    IMAGE_BACKEND = "${DOCKERHUB_USERNAME}/marketplus-backend"
-    IMAGE_FRONTEND = "${DOCKERHUB_USERNAME}/marketplus-frontend"
+    IMAGE_BACKEND = "${shikhar1330}/marketplus-backend"
+    IMAGE_FRONTEND = "${shikhar1330}/marketplus-frontend"
     IMAGE_TAG = "${BUILD_NUMBER}"
     K8S_NAMESPACE = "marketplus"
   }
