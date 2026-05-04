@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: marketplus-postgres
+    environment:
+      POSTGRES_DB: marketplusdb
+      POSTGRES_USER: marketplus
+      POSTGRES_PASSWORD: marketplus123
+    ports: ["5432:5432"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marketplus -d marketplusdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  backend:
+    build: ./backend
+    container_name: marketplus-backend
+    environment:
+      DATABASE_URL: postgresql://marketplus:marketplus123@postgres:5432/marketplusdb
+      JWT_SECRET: marketplus_super_secret_change_me
+      PORT: 5000
+    ports: ["5001:5000"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+  frontend:
+    build: ./frontend
+    container_name: marketplus-frontend
+    ports: ["3000:80"]
+    depends_on: [backend]
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: marketplus-prometheus
+    ports: ["9090:9090"]
+    volumes:
+      - ./devops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on: [backend]
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: marketplus-grafana
+    ports: ["3001:3000"]
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./devops/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./devops/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on: [prometheus]
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: marketplus-jenkins
+    user: root
+    ports: ["8080:8080", "50000:50000"]
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  postgres_data:
+  grafana_data:
+  jenkins_home:

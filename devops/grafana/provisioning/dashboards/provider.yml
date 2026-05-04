@@ -1,0 +1,10 @@
+apiVersion: 1
+providers:
+  - name: MarketPlus Dashboards
+    orgId: 1
+    folder: MarketPlus
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    options:
+      path: /var/lib/grafana/dashboards

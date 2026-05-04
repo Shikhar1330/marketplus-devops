@@ -1,0 +1,1 @@
+const {isValidSentiment}=require('../utils/validators');test('valid sentiment',()=>{expect(isValidSentiment('POSITIVE')).toBe(true);expect(isValidSentiment('BAD')).toBe(false)});test('title not empty',()=>{expect('Market update'.trim().length).toBeGreaterThan(0)});

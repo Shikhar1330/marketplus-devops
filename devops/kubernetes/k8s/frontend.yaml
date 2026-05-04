@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marketplus-frontend
+  namespace: marketplus
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: marketplus-frontend }
+  template:
+    metadata:
+      labels: { app: marketplus-frontend }
+    spec:
+      containers:
+        - name: frontend
+          image: yourdockerhubusername/marketplus-frontend:latest
+          ports: [{ containerPort: 80 }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-external
+  namespace: marketplus
+spec:
+  type: LoadBalancer
+  selector: { app: marketplus-frontend }
+  ports:
+    - port: 80
+      targetPort: 80

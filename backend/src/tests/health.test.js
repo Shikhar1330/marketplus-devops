@@ -1,0 +1,1 @@
+const request=require('supertest');const app=require('../app');test('GET /health returns ok',async()=>{const r=await request(app).get('/health');expect(r.statusCode).toBe(200);expect(r.body.status).toBe('ok');expect(r.body.service).toBe('marketplus-backend')});

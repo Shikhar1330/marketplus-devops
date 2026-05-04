@@ -1,0 +1,1 @@
+const app=require('./app');const seed=require('./seed');const PORT=process.env.PORT||5000;seed().catch(e=>console.error('Seed error',e.message)).finally(()=>app.listen(PORT,()=>console.log(`MarketPlus backend running on ${PORT}`)));
