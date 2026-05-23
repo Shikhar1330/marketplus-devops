@@ -1,6 +1,6 @@
 # MarketPlus: Real-Time News and Insights Web Application
 
-This is a beginner-friendly full-stack DevOps project similar to the uploaded LexVault report structure. It includes CI/CD pipeline, Docker, Jenkins, Prometheus, Grafana, AWS-ready Kubernetes deployment, Terraform starter files, and Blue-Green deployment.
+This is a beginner-friendly full-stack DevOps project . It includes CI/CD pipeline, Docker, Jenkins, Prometheus, Grafana, AWS-ready Kubernetes deployment, Terraform starter files, and Blue-Green deployment.
 
 **Free-version note:** run the complete project locally with Docker Compose. AWS/EKS can create charges, so use AWS only if you understand billing or only need screenshots for demo.
 
